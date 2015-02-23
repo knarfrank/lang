@@ -1,3 +1,3 @@
-hello = a + 2
-b = 34 + 34
-g£ = 4
+func something : (n: Integer, a: Integer) -> (Integer) {
+
+}
