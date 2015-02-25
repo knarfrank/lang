@@ -1,4 +1,4 @@
-# lang (No real name yet... will there ever be?)
+# lang (No real name yet...)
 A simple compiler written in go.
 
 
