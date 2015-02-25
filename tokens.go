@@ -70,10 +70,10 @@ const (
   /*
       Keywords
   */
-  IF     // "if"
-  ELSE   // "else"
-  FUNC    // "func"
-
+  IF     // if
+  ELSE   // else
+  FUNC    // func
+  LET    // let
 
 
 
@@ -96,12 +96,13 @@ func getTokens() []token {
                           token{IF, "", "^(if)$"},
                           token{ELSE, "", "^(else)$"},
                           token{FUNC, "", "^(func)$"},
+                          token{LET, "", "^(let)$"},
                           token{RPAREN, "", "^\\($"},
                           token{LPAREN, "", "^\\)$"},
                           token{RCURL, "", "^\\{$"},
                           token{LCURL, "", "^\\}$"},
                           token{COLN, "", "^:$"},
-                          token{COLN, "", "^;$"},
+                          token{SCOLN, "", "^;$"},
                           token{COMMA, "", "^,$"},
                           token{IDFR, "", "^[a-z|A-Z][a-z|A-Z]*$"},
                           token{INT, "", "^[0-9]+$"},
@@ -165,6 +166,6 @@ func getTokenName(id int) string {
 
 
 
-    default: return "unknow token: " + strconv.Itoa(id)
+    default: return "Unknown token: " + strconv.Itoa(id)
   }
 }

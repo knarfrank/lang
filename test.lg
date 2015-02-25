@@ -1,3 +1,2 @@
-func something : (n: Integer, a: Integer) -> (Integer) {
-
-}
+a = (5 * 2);
+h = 4;
