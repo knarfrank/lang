@@ -3,15 +3,11 @@ import (
   "fmt"
   "regexp"
   "strconv"
-  "io/ioutil"
   "lang/parser"
   "lang/tokens"
 )
-func Lex() {
-  // Read in file (should move to function...)
-  dat, err := ioutil.ReadFile("test.lg")
-  checkError(err)
-  program := string(dat)
+func Lex(program string) {
+
   tokenList := make([]tokens.Token, 0)
   var lastToken tokens.Token
 
