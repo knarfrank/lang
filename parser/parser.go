@@ -1,19 +1,33 @@
-package main
+package parser
 
 import (
-  //"fmt"
-  //"strconv"
+  "fmt"
+  "strconv"
+  "lang/tokens"
 )
 
+const (
+  STATEMENT = iota
 
-func statements(list []token) (bool, *Tree) {
+
+)
+func GenerateTree(list []tokens.Token) bool {
+  ast := new(Tree)
+  _, t := statements(list)
+  addChildren1(ast, t)
+  return true
+}
+
+
+
+func statements(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
 
   if len(list) == 0 {
     return true, ast
   }
   for i:=0; i<= len(list); i++ {
-    if(list[i].token == SCOLN) {
+    if(list[i].Token == tokens.SCOLN) {
       _, t0 := statement(list[0:i])
       _, t1 := statements(list[i+1:len(list)])
       addChildren2(ast, t0, t1)
@@ -23,7 +37,7 @@ func statements(list []token) (bool, *Tree) {
   return true, ast
 }
 
-func statement(list []token) (bool, *Tree) {
+func statement(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = STATEMENT
   if s,t := assignment(list); s == true {
@@ -41,24 +55,24 @@ FACTOR := <IDFR> | <INT> | <RPAREN><EXPRSSION><LPAREN>
 FUNCTION := <FUNC> <IDFR> <COLN> <RPAREN> <LPAREN>
 
 */
-func assignment(list []token) (bool, *Tree) {
+func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  if list[0].token != IDFR {
+  if list[0].Token != tokens.IDFR {
     return false, ast
   }
-  if list[1].token != ASMT {
+  if list[1].Token != tokens.ASMT {
     return false, ast
   }
   if !expression(list[2:len(list)]) {
     return false, ast
   }
-  if list[len(list)-1].token != SCOLN {
+  if list[len(list)-1].Token != tokens.SCOLN {
     return false, ast
   }
   return true, ast
 }
 
-func expression(list []token) bool {
+func expression(list []tokens.Token) bool {
   for i:=1; i <= len(list); i++ {
     // If the first characters are a factor
     if factor(list[0:i]) {
@@ -68,7 +82,7 @@ func expression(list []token) bool {
           break
         }
         // If the next character is a arithmetic operator
-        if list[0].token == ADD || list[0].token == SUB || list[0].token == MUL || list[0].token == DIV {
+        if list[0].Token == tokens.ADD || list[0].Token == tokens.SUB || list[0].Token == tokens.MUL || list[0].Token == tokens.DIV {
 
           for j:=2; j <= len(list); j++ {
 
@@ -97,12 +111,12 @@ func expression(list []token) bool {
   return false
 }
 
-func factor(list []token) bool {
-  if list[0].token == IDFR || list[0].token == INT {
+func factor(list []tokens.Token) bool {
+  if list[0].Token == tokens.IDFR || list[0].Token == tokens.INT {
     return true
   } else {
-    if list[0].token == RPAREN {
-      if list[len(list)-1].token == LPAREN {
+    if list[0].Token == tokens.RPAREN {
+      if list[len(list)-1].Token == tokens.LPAREN {
         if expression(list[1:len(list)]){
           return true
         }
@@ -111,5 +125,18 @@ func factor(list []token) bool {
       }
     }
     return false
+  }
+}
+
+
+func generateError(s string, lineNumber int, pos int, line string) {
+  fmt.Println(line)
+  panic("Parse Error: " + s + " On Line " + strconv.Itoa(lineNumber) + " column " + strconv.Itoa(pos))
+}
+
+
+func checkError(err error) {
+  if err != nil {
+    fmt.Println(err)
   }
 }
