@@ -18,14 +18,14 @@ func Lex(program string) {
 
   var comment bool
   currentPos := 0
-  lineNumber = 0
+  lineNumber = 1
   columnNumber = 0
   comment = false
   program = program + " "
   for i:=1;i<=len(program);i++ {
     //fmt.Println( strconv.Itoa(columnNumber) + ": " + string(program[currentPos:i]))
     currentLine = string(program[linePos:i])
-    if currentToken := getToken(string(program[currentPos:i])); currentToken.Token == tokens.IGNR {
+    if currentToken := getToken(string(program[currentPos:i]), lineNumber, columnNumber); currentToken.Token == tokens.IGNR {
 
       // If the last token was a start of a block comment
       if lastToken.Token == tokens.SCMNT {
@@ -74,16 +74,18 @@ func Lex(program string) {
 }
 
 
-func getToken(s string) tokens.Token {
+func getToken(s string, line int, column int) tokens.Token {
   tok := tokens.GetTokens()
   for _, t := range tok {
     // We return the first one that matches.
     if(checkToken(t, s)) {
       t.Value = s
+      t.Line = line
+      t.Col = column
       return t
     }
   }
-  return tokens.Token{tokens.IGNR, "", ""}
+  return tokens.Token{tokens.IGNR, "", "", line, column}
 }
 
 func checkToken(t tokens.Token, substr string) bool {

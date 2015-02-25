@@ -18,6 +18,7 @@ func main() {
   dat, err := ioutil.ReadFile("test.lg")
   checkError(err)
   program := string(dat)
+  fmt.Println("File Loaded. Compiling Code...")
   lexer.Lex(program)
 }
 

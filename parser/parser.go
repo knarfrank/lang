@@ -96,7 +96,7 @@ func statement(list []tokens.Token) (bool, *Tree) {
   } else if s,t := ifStatement(list); s == true {
     return true, t
   } else {
-    generateError("Invalid Statement", -1, -1, "")
+    generateError("Invalid Statement", list[0].Line, list[0].Col, "")
   }
   return false, nil
 }
@@ -137,6 +137,9 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
 func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = ASSIGNMENT
+  if len(list) < 3 {
+    return false, ast
+  }
   if list[0].Token != tokens.IDFR {
     return false, ast
   }

@@ -83,47 +83,49 @@ type Token struct {
   Token int
   Value string
   Regex string
+  Line  int
+  Col   int
 }
 
 
 func GetTokens() []Token {
   var Tokens []Token
   Tokens = make([]Token, 0, 0)
-  Tokens = append(Tokens, Token{NL, "", "^\\n$"},
-                          Token{WS, "", "^(\\s)+$"},
-                          Token{SCMNT, "", "^/\\*$"},
-                          Token{ECMNT, "", "^\\*/$"},
-                          Token{IF, "", "^(if)$"},
-                          Token{ELSE, "", "^(else)$"},
-                          Token{FUNC, "", "^(func)$"},
-                          Token{LET, "", "^(let)$"},
-                          Token{RPAREN, "", "^\\($"},
-                          Token{LPAREN, "", "^\\)$"},
-                          Token{RCURL, "", "^\\{$"},
-                          Token{LCURL, "", "^\\}$"},
-                          Token{COLN, "", "^:$"},
-                          Token{SCOLN, "", "^;$"},
-                          Token{COMMA, "", "^,$"},
-                          Token{BOOL, "", "^(true|false)$"},
-                          Token{IDFR, "", "^[a-z|A-Z][a-z|A-Z]*$"},
-                          Token{INT, "", "^[0-9]+$"},
-                          Token{ADD, "", "^\\+$"},
-                          Token{SUB, "", "^-$"},
-                          Token{MUL, "", "^\\*$"},
-                          Token{DIV, "", "^/$"},
-                          Token{MOD, "", "^%$"},
-                          Token{AND, "", "^&$"},
-                          Token{OR, "", "^\\|$"},
-                          Token{XOR, "", "^\\^$"},
-                          Token{BNOT, "", "^~$"},
-                          Token{RSHFT, "", "^>>$"},
-                          Token{LSHFT, "", "^<<$"},
-                          Token{EQU, "", "^(==)$"},
-                          Token{LST, "", "^<$"},
-                          Token{GRT, "", "^>$"},
-                          Token{LNOT, "", "^!$"},
-                          Token{ASMT, "", "^=$"},
-                          Token{IGNR, "", "^.$"})
+  Tokens = append(Tokens, Token{NL, "", "^\\n$", 0, 0},
+                          Token{WS, "", "^(\\s)+$", 0, 0},
+                          Token{SCMNT, "", "^/\\*$", 0, 0},
+                          Token{ECMNT, "", "^\\*/$", 0, 0},
+                          Token{IF, "", "^(if)$", 0, 0},
+                          Token{ELSE, "", "^(else)$", 0, 0},
+                          Token{FUNC, "", "^(func)$", 0, 0},
+                          Token{LET, "", "^(let)$", 0, 0},
+                          Token{RPAREN, "", "^\\($", 0, 0},
+                          Token{LPAREN, "", "^\\)$", 0, 0},
+                          Token{RCURL, "", "^\\{$", 0, 0},
+                          Token{LCURL, "", "^\\}$", 0, 0},
+                          Token{COLN, "", "^:$", 0, 0},
+                          Token{SCOLN, "", "^;$", 0, 0},
+                          Token{COMMA, "", "^,$", 0, 0},
+                          Token{BOOL, "", "^(true|false)$", 0, 0},
+                          Token{IDFR, "", "^[a-z|A-Z][a-z|A-Z]*$", 0, 0},
+                          Token{INT, "", "^[0-9]+$", 0, 0},
+                          Token{ADD, "", "^\\+$", 0, 0},
+                          Token{SUB, "", "^-$", 0, 0},
+                          Token{MUL, "", "^\\*$", 0, 0},
+                          Token{DIV, "", "^/$", 0, 0},
+                          Token{MOD, "", "^%$", 0, 0},
+                          Token{AND, "", "^&$", 0, 0},
+                          Token{OR, "", "^\\|$", 0, 0},
+                          Token{XOR, "", "^\\^$", 0, 0},
+                          Token{BNOT, "", "^~$", 0, 0},
+                          Token{RSHFT, "", "^>>$", 0, 0},
+                          Token{LSHFT, "", "^<<$", 0, 0},
+                          Token{EQU, "", "^(==)$", 0, 0},
+                          Token{LST, "", "^<$", 0, 0},
+                          Token{GRT, "", "^>$", 0, 0},
+                          Token{LNOT, "", "^!$", 0, 0},
+                          Token{ASMT, "", "^=$", 0, 0},
+                          Token{IGNR, "", "^.$", 0, 0})
 
   return Tokens
 }
