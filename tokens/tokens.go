@@ -164,8 +164,6 @@ func getTokenName(id int) string {
     case ELSE: return "ELSE"
     case FUNC: return "FUNC"
 
-
-
     default: return "Unknown Token: " + strconv.Itoa(id)
   }
 }

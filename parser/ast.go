@@ -1,7 +1,6 @@
 package parser
 import (
-  //"fmt"
-  //"regexp"
+  "fmt"
   //"strconv"
   //"io/ioutil"
 
@@ -16,6 +15,24 @@ type Tree struct {
 }
 
 
+func displayTree(t *Tree, i int) {
+  for j:=0; j < i; j++ {
+    fmt.Print("   ")
+  }
+  fmt.Println(getLabel(t.label) + " (" + t.value +")")
+  if t.child0 != nil {
+    displayTree(t.child0, i+1)
+  }
+  if t.child1 != nil {
+    displayTree(t.child1, i+1)
+  }
+  if t.child2 != nil {
+    displayTree(t.child2, i+1)
+  }
+  if t.child3 != nil {
+    displayTree(t.child3, i+1)
+  }
+}
 
 func node(label int, value string) *Tree {
   node := new(Tree)
@@ -23,13 +40,16 @@ func node(label int, value string) *Tree {
   node.value = value
   return node
 }
+
 func addChildren1(parent *Tree, c0 *Tree) {
   parent.child0 = c0
 }
+
 func addChildren2(parent *Tree, c0 *Tree, c1 *Tree) {
   parent.child0 = c0
   parent.child1 = c1
 }
+
 func addChildren3(parent *Tree, c0 *Tree, c1 *Tree, c2 *Tree) {
   parent.child0 = c0
   parent.child1 = c1
