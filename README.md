@@ -22,8 +22,12 @@ assignment  =   identifier equals expresison
 expression  =   factor {operator factor}
 factor      =   identifier | integer | "(" expression ")"
 boolexp     =   bool | (expression boolop expression)
-ifstatement =   "if" boolexp "{" statements "}" { "else if" boolexp "{" statements "}" } [("else" "{" statements "}")]
+ifstatement =   "if" boolexp "{" statements "}"
+                { "else if" boolexp "{" statements "}" }
+                [("else" "{" statements "}")]
 
-; func someFunction : (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; }
-function    =   "func" identifier ":" "(" {identifier ":" type [","]} ")" "->" "(" {type [ "," ]} ")" "{" statements "}"
+; func someFunction : (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; }
+function    =   "func" identifier ":"
+                "(" {identifier ":" type [","]} ")" "->"
+                "(" {type [ "," ]} ")" "{" statements "}"
 ```
