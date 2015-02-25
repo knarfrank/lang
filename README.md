@@ -18,6 +18,7 @@ boolop      =   "<" | ">" | "<=" | ">=" | "==" | "!="
 identifier  =   [uppercase | uppercase] {[uppercase | uppercase | digit]}
 integer     =   ["-"] digit {digit}
 
+declaration =   "var" identifier ":" type
 assignment  =   identifier equals expresison
 expression  =   factor {operator factor}
 factor      =   identifier | integer | "(" expression ")"
@@ -26,8 +27,12 @@ ifstatement =   "if" boolexp "{" statements "}"
                 { "else if" boolexp "{" statements "}" }
                 [("else" "{" statements "}")]
 
-; func someFunction : (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; }
+(* func someFunction : (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; } *)
 function    =   "func" identifier ":"
                 "(" {identifier ":" type [","]} ")" "->"
                 "(" {type [ "," ]} ")" "{" statements "}"
+
+class       =   "class" identifier "{" {declaration | function} "}"
+
+
 ```
