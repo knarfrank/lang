@@ -9,6 +9,7 @@ import (
 const (
   ROOT = iota
   STATEMENT
+  IFSTATEMENT
   ASSIGNMENT
   EXPRESSION
   IDFR
@@ -22,6 +23,7 @@ func getLabel(l int) string {
   switch(l) {
     case ROOT: return "ROOT"
     case STATEMENT: return "STATEMENT"
+    case IFSTATEMENT: return "IFSTATEMENT"
     case ASSIGNMENT: return "ASSIGNMENT"
     case EXPRESSION: return "EXPRESSION"
     case IDFR: return "IDFR"
@@ -30,54 +32,74 @@ func getLabel(l int) string {
     case SUB: return "SUB"
     case MUL: return "MUL"
     case DIV: return "DIV"
+
     default: return "BLEH"
   }
 }
+
+
 func GenerateTree(list []tokens.Token) bool {
   ast := new(Tree)
   ast.label = ROOT
-  _, t0, t1:= statements(list)
-  addChildren2(ast, t0, t1)
+  statements(ast, list)
   displayTree(ast, 0)
   return true
 }
 
 
 
-func statements(list []tokens.Token) (bool, *Tree, *Tree) {
+func statements(ast *Tree, list []tokens.Token) {
   if len(list) == 0 {
-    return true, nil, nil
+    return
   }
   for i:=0; i<= len(list); i++ {
-    if(list[i].Token == tokens.SCOLN) {
+    if list[i].Token == tokens.SCOLN {
       t3 := new(Tree)
       t3.label = STATEMENT
       _, t0 := statement(list[0:i])
-      _, t1, t2 := statements(list[i+1:len(list)])
-      addChildren2(t3, t1, t2)
-      return true, t0, t3
-      break
+      addChild(ast, t0)
+      statements(ast, list[i+1:len(list)])
+      return
+    } else if list[i].Token == tokens.RCURL {
+      count := 1
+      for {
+        i++
+        if list[i].Token == tokens.LCURL {
+          count--
+          if count == 0 {
+            t3 := new(Tree)
+            t3.label = STATEMENT
+            _, t0 := statement(list[0:i+1])
+            addChild(ast, t0)
+            statements(ast, list[i+1:len(list)])
+            return
+          }
+        } else if list[i].Token == tokens.RCURL {
+          count++
+        }
+
+      }
+
     }
   }
-  return true, nil, nil
+  return
 }
 
 func statement(list []tokens.Token) (bool, *Tree) {
   if s,t := assignment(list); s == true {
     return true, t
+  } else if s,t := ifStatement(list); s == true {
+    return true, t
   }
   return false, nil
 }
-/*
-STATEMENTS := <STATEMENT> (STATEMENTS)*
-STATEMENT := <ASSIGNMENT>
 
-ASSIGNMENT := <IDFR> <ASMT> <EXPRSSION> <SCOLN>
-EXPRSSION := <FACTOR> ((<ADD> | <SUB> | <MUL> | <DIV>) <FACTOR>)*
-FACTOR := <IDFR> | <INT> | <RPAREN><EXPRSSION><LPAREN>
-FUNCTION := <FUNC> <IDFR> <COLN> <RPAREN> <LPAREN>
-
-*/
+func ifStatement(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = IFSTATEMENT
+  fmt.Println(list)
+  return true, ast
+}
 func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = ASSIGNMENT

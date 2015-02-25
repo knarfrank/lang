@@ -1,3 +1,12 @@
-a = 3;
-b = a*6;
-c = 23445352*435;
+boop = 234;
+
+
+hello = 234;
+
+
+if (hello == something) {
+  fuck = fuck;
+}
+
+hello = 234;
+hello = 234;
