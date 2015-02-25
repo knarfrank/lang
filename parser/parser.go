@@ -7,27 +7,32 @@ import (
 )
 
 const (
-  ROOT = iota
+  STATEMENTS = iota
   STATEMENT
   IFSTATEMENT
+  BOOLEXPRESSION
   ASSIGNMENT
   EXPRESSION
   IDFR
   INT
+  BOOL
   ADD
   SUB
   MUL
   DIV
+
 )
 func getLabel(l int) string {
   switch(l) {
-    case ROOT: return "ROOT"
+    case STATEMENTS: return "STATEMENTS"
     case STATEMENT: return "STATEMENT"
     case IFSTATEMENT: return "IFSTATEMENT"
+    case BOOLEXPRESSION: return "BOOLEXPRESSION"
     case ASSIGNMENT: return "ASSIGNMENT"
     case EXPRESSION: return "EXPRESSION"
     case IDFR: return "IDFR"
     case INT: return "INT"
+    case BOOL: return "BOOL"
     case ADD: return "ADD"
     case SUB: return "SUB"
     case MUL: return "MUL"
@@ -40,7 +45,6 @@ func getLabel(l int) string {
 
 func GenerateTree(list []tokens.Token) bool {
   ast := new(Tree)
-  ast.label = ROOT
   statements(ast, list)
   displayTree(ast, 0)
   return true
@@ -49,6 +53,7 @@ func GenerateTree(list []tokens.Token) bool {
 
 
 func statements(ast *Tree, list []tokens.Token) {
+  ast.label = STATEMENTS
   if len(list) == 0 {
     return
   }
@@ -90,6 +95,8 @@ func statement(list []tokens.Token) (bool, *Tree) {
     return true, t
   } else if s,t := ifStatement(list); s == true {
     return true, t
+  } else {
+    generateError("Invalid Statement", -1, -1, "")
   }
   return false, nil
 }
@@ -97,7 +104,34 @@ func statement(list []tokens.Token) (bool, *Tree) {
 func ifStatement(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = IFSTATEMENT
-  fmt.Println(list)
+
+  // If statement starts off with IF keyword
+  if list[0].Token != tokens.IF {
+    return false, ast
+  }
+  // If next character is an open bracket
+  if list[1].Token != tokens.RPAREN {
+    return false, ast
+  }
+  // Search for boolean expression
+  i := 2
+  for i=2; i < len(list); i++ {
+    if list[i].Token == tokens.LPAREN {
+      if c, t := booleanExpression(list[2:i]); c {
+        addChild(ast, t)
+        break
+      } else {
+        return false, ast
+      }
+    }
+  }
+  // Test for curly bracket starting statement code.
+  if list[i+1].Token != tokens.RCURL {
+    return false, ast
+  }
+  stmt := new(Tree)
+  statements(stmt, list[i+2:len(list)-1])
+  addChild(ast, stmt)
   return true, ast
 }
 func assignment(list []tokens.Token) (bool, *Tree) {
@@ -116,7 +150,15 @@ func assignment(list []tokens.Token) (bool, *Tree) {
   addChildren2(ast, node(IDFR, list[0].Value), t)
   return true, ast
 }
+func booleanExpression(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = BOOLEXPRESSION
+  if list[0].Token == tokens.BOOL {
 
+    addChildren1(ast, node(BOOL, list[0].Value))
+  }
+  return true, ast
+}
 func expression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = EXPRESSION

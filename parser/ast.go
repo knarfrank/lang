@@ -17,6 +17,10 @@ type Tree struct {
 
 
 func displayTree(t *Tree, i int) {
+  for j:=0; j < i; j++ {
+    fmt.Print("   ")
+  }
+  fmt.Println(getLabel(t.label) + " (" + t.value +")")
   if t.children != nil {
     if len(t.children) != 0 {
       for j:=0; j < len(t.children); j++ {
@@ -24,10 +28,6 @@ func displayTree(t *Tree, i int) {
       }
     }
   } else {
-    for j:=0; j < i; j++ {
-      fmt.Print("   ")
-    }
-    fmt.Println(getLabel(t.label) + " (" + t.value +")")
     if t.child0 != nil {
       displayTree(t.child0, i+1)
     }

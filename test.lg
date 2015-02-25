@@ -1,12 +1,12 @@
-boop = 234;
-
-
-hello = 234;
-
-
-if (hello == something) {
-  fuck = fuck;
+/*
+class first {
+  func add : (a: Int, b: Int) -> (Int) {
+    return a + b
+  }
 }
-
-hello = 234;
-hello = 234;
+*/
+if (true) {
+  hello = 9879878234;
+  hello = 234;
+}
+hi = a + 1;
