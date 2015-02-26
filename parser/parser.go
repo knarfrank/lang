@@ -165,6 +165,7 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
 func expression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = EXPRESSION
+
   var fn func(*Tree, []tokens.Token) *Tree
   for i:=1; i <= len(list); i++ {
     // If the first characters are a factor
@@ -186,9 +187,8 @@ func expression(list []tokens.Token) (bool, *Tree) {
           }
           for j:=2; j <= len(l); j++ {
             if s,t := factor(l[1:j]); s {
-
               l = l[j:len(l)]
-              if len(list) == 0 {
+              if len(l) == 0 {
                 addChildren2(tmp, f, t)
               } else {
                 addChildren2(tmp, f, fn(t, l))
