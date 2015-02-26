@@ -14,7 +14,9 @@ bool        =   "true" | "false"
 type        =   "Int" | "Bool" | "Char" | "String"
 
 operator    =   "+" | "-" | "*" | "/"
-boolop      =   "<" | ">" | "<=" | ">=" | "==" | "!="
+cmpop       =   "<" | ">" | "<=" | ">=" | "==" | "!="
+
+boolop      =   "&&" | "||"
 identifier  =   [uppercase | uppercase] {[uppercase | uppercase | digit]}
 integer     =   ["-"] digit {digit}
 
@@ -22,7 +24,11 @@ declaration =   "var" identifier ":" type
 assignment  =   identifier equals expresison
 expression  =   factor {operator factor}
 factor      =   identifier | integer | "(" expression ")"
-boolexp     =   bool | (expression boolop expression)
+
+boolexp     =   boolelem | boolexp boolop boolexp | expression cmpop expression
+
+boolelem    =   bool | "!" boolelem | "(" boolexp ")"
+
 ifstatement =   "if" boolexp "{" statements "}"
                 { "else if" boolexp "{" statements "}" }
                 [("else" "{" statements "}")]
