@@ -41,4 +41,7 @@ function    =   "func" identifier ":"
 class       =   "class" identifier "{" {declaration | function} "}"
 
 
+statements  =   statement ";" {statements}
+statement   =   declaration | assignment | ifstatement | function | class
+
 ```
