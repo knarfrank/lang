@@ -1,10 +1,6 @@
-hi = a / 1;
-hi = a * 1;
-hi = a + 1;
-hi = a - 1;
-hi = a + 1;
-if (!true) {
-  hello = 9879878234;
-  hello = 234;
+class josh {
+  var boo : (a: Integer, b: String);
 }
-hi = a + 1;
+class {
+  var boo : (a: Integer, b: String);
+}

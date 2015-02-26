@@ -10,6 +10,7 @@ const (
   STATEMENTS = iota
   STATEMENT
   IFSTATEMENT
+  CLASS
   BOOLEXPRESSION
   ASSIGNMENT
   EXPRESSION
@@ -28,6 +29,7 @@ func getLabel(l int) string {
     case STATEMENTS: return "STATEMENTS"
     case STATEMENT: return "STATEMENT"
     case IFSTATEMENT: return "IFSTATEMENT"
+    case CLASS: return "CLASS"
     case BOOLEXPRESSION: return "BOOLEXPRESSION"
     case ASSIGNMENT: return "ASSIGNMENT"
     case EXPRESSION: return "EXPRESSION"
@@ -92,14 +94,31 @@ func statements(ast *Tree, list []tokens.Token) {
 }
 
 func statement(list []tokens.Token) (bool, *Tree) {
-  if s,t := assignment(list); s == true {
+  if s,t := assignment(list); s {
     return true, t
-  } else if s,t := ifStatement(list); s == true {
+  } else if s,t := ifStatement(list); s{
+    return true, t
+  } else if s,t := class(list); s {
     return true, t
   } else {
     generateError("Invalid Statement", list[0].Line, list[0].Col, "")
   }
   return false, nil
+}
+
+func class(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = CLASS
+  if list[0].Token != tokens.CLASS {
+    return false, ast
+  }
+
+  if list[1].Token != tokens.IDFR {
+    generateError("Invalid Class Name", list[1].Line, list[1].Col, "")
+  }
+
+  ast.value = list[1].Value
+  return true, ast
 }
 
 func ifStatement(list []tokens.Token) (bool, *Tree) {
@@ -168,6 +187,13 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
       addChildren1(b, t)
       addChildren1(ast, b)
       return true, ast
+    } else {
+      for i:=1; i <= len(list); i++ {
+        if s, _ := factor(list[0:i]); s {
+          list = list[i:len(list)]
+          fmt.Println(list)
+        }
+      }
     }
   }
   return true, ast

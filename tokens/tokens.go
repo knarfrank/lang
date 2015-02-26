@@ -74,6 +74,7 @@ const (
   ELSE   // else
   FUNC    // func
   LET    // let
+  CLASS   // class
 
 
 
@@ -98,6 +99,7 @@ func GetTokens() []Token {
                           Token{IF, "", "^(if)$", 0, 0},
                           Token{ELSE, "", "^(else)$", 0, 0},
                           Token{FUNC, "", "^(func)$", 0, 0},
+                          Token{CLASS, "", "^(class)$", 0, 0},
                           Token{LET, "", "^(let)$", 0, 0},
                           Token{RPAREN, "", "^\\($", 0, 0},
                           Token{LPAREN, "", "^\\)$", 0, 0},
