@@ -231,7 +231,9 @@ func expression(list []tokens.Token) (bool, *Tree) {
               return tmp
             }
           }
-
+          generateError("Missing operand in expression", l[0].Line, l[0].Col, "")
+        } else {
+          generateError("Invalid Operation in Statement", l[0].Line, l[0].Col, "")
         }
         return nil
       }
