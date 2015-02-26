@@ -1,9 +1,9 @@
+hi = a / 1;
+hi = a * 1;
 hi = a + 1;
+hi = a - 1;
 hi = a + 1;
-hi = a + 1;
-hi = a + 1;
-hi = a + 1;
-if (true) {
+if (!true) {
   hello = 9879878234;
   hello = 234;
 }

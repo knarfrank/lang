@@ -20,6 +20,7 @@ const (
   SUB
   MUL
   DIV
+  NOT
 
 )
 func getLabel(l int) string {
@@ -37,7 +38,7 @@ func getLabel(l int) string {
     case SUB: return "SUB"
     case MUL: return "MUL"
     case DIV: return "DIV"
-
+    case NOT: return "NOT"
     default: return "BLEH"
   }
 }
@@ -157,22 +158,30 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = BOOLEXPRESSION
   if list[0].Token == tokens.BOOL {
-
     addChildren1(ast, node(BOOL, list[0].Value))
+    return true, ast
+  } else {
+    // If first character is equal to a unary operation such as negation
+    if list[0].Token == tokens.LNOT {
+      _, t := booleanExpression(list[1:len(list)])
+      b := node(NOT, "")
+      addChildren1(b, t)
+      addChildren1(ast, b)
+      return true, ast
+    }
   }
   return true, ast
 }
 func expression(list []tokens.Token) (bool, *Tree) {
+  var fn func(*Tree, []tokens.Token) *Tree
   ast := new(Tree)
   ast.label = EXPRESSION
-
-  var fn func(*Tree, []tokens.Token) *Tree
   for i:=1; i <= len(list); i++ {
     // If the first characters are a factor
     if s, f := factor(list[0:i]); s {
       list = list[i:len(list)]
 
-
+      // This nested function deals with repeated operations such as 5+2+d+5
       fn = func(f *Tree, l []tokens.Token) *Tree {
         tmp := new(Tree)
         if len(l) == 0 {
@@ -200,6 +209,8 @@ func expression(list []tokens.Token) (bool, *Tree) {
         }
         return nil
       }
+
+
       if len(list) == 0 {
         addChildren1(ast, f)
       } else {
@@ -210,7 +221,6 @@ func expression(list []tokens.Token) (bool, *Tree) {
       if i == len(list) {
         generateError("Invalid expression", -1, -1, "")
       }
-
     }
   }
   return false, nil
