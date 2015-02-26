@@ -133,7 +133,7 @@ func GetTokens() []Token {
 }
 
 
-func getTokenName(id int) string {
+func GetTokenName(id int) string {
   switch(id) {
     case IGNR: return "IGNR"
     case WS: return "WS"

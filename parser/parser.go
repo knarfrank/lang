@@ -245,7 +245,7 @@ func expression(list []tokens.Token) (bool, *Tree) {
       return true, ast
     } else {
       if i == len(list) {
-        generateError("Invalid expression", -1, -1, "")
+        generateError("Invalid Statement", list[0].Line, list[0].Col, "")
       }
     }
   }
