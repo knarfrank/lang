@@ -3,10 +3,9 @@ import (
   "fmt"
   "regexp"
   "strconv"
-  "lang/parser"
   "lang/tokens"
 )
-func Lex(program string) {
+func Lex(program string) []tokens.Token {
 
   tokenList := make([]tokens.Token, 0)
   var lastToken tokens.Token
@@ -70,7 +69,7 @@ func Lex(program string) {
     }
     columnNumber++
   }
-  fmt.Println(parser.GenerateTree(tokenList))
+  return tokenList
 }
 
 

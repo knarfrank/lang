@@ -43,7 +43,7 @@ func getLabel(l int) string {
 }
 
 
-func GenerateTree(list []tokens.Token) bool {
+func Parse(list []tokens.Token) bool {
   ast := new(Tree)
   statements(ast, list)
   displayTree(ast, 0)
