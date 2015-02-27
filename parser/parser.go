@@ -17,6 +17,7 @@ const (
   BOOLEXPRESSION
   ASSIGNMENT
   EXPRESSION
+  VAR
   IDFR
   INT
   BOOL
@@ -38,6 +39,7 @@ func getLabel(l int) string {
     case RETURNTYPE: return "RETURNTYPE"
     case BOOLEXPRESSION: return "BOOLEXPRESSION"
     case ASSIGNMENT: return "ASSIGNMENT"
+    case VAR: return "VAR"
     case EXPRESSION: return "EXPRESSION"
     case IDFR: return "IDFR"
     case INT: return "INT"

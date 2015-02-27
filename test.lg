@@ -4,7 +4,7 @@ class stoil {
     be = 1;
   }
 
-  func eat (a: Int, b: Int) -> (Int) {
+  func eat (sf: Int, b: Int) -> (Int) {
     be = 1;
     be = 1;
     be = 1;
