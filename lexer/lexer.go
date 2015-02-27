@@ -65,6 +65,7 @@ func Lex(program string) []tokens.Token {
       lastToken = currentToken
     } else {
       lastToken = currentToken
+      // If character is a new line.
       if program[i-1] == 10 {
         lineNumber++
         columnNumber = 0

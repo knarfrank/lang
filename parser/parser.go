@@ -129,10 +129,12 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
   if list[0].Token != tokens.IF {
     return false, ast
   }
+
   // If next character is an open bracket
   if list[1].Token != tokens.RPAREN {
     return false, ast
   }
+
   // Search for boolean expression
   i := 2
   for i=2; i < len(list); i++ {
@@ -145,6 +147,7 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
       }
     }
   }
+
   // Test for curly bracket starting statement code.
   if list[i+1].Token != tokens.RCURL {
     return false, ast
@@ -154,6 +157,7 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
   addChild(ast, stmt)
   return true, ast
 }
+
 func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = ASSIGNMENT

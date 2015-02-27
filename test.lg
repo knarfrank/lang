@@ -1,4 +1,5 @@
-
-
-
-d = 3*4+3;
+class stoil {
+  func nuts : (a: Int, b: Int) -> (Int, String) {
+    return 243, "NO";
+  }
+}
