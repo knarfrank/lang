@@ -60,7 +60,7 @@ func statements(ast *Tree, list []tokens.Token) {
   if len(list) == 0 {
     return
   }
-  for i:=0; i<= len(list); i++ {
+  for i:=0; i< len(list); i++ {
     if list[i].Token == tokens.SCOLN {
       t3 := new(Tree)
       t3.label = STATEMENT
@@ -68,9 +68,14 @@ func statements(ast *Tree, list []tokens.Token) {
       addChild(ast, t0)
       statements(ast, list[i+1:len(list)])
       return
+
     } else if list[i].Token == tokens.RCURL {
       count := 1
       for {
+        // If there is an open bracket but no code.
+        if len(list[i:len(list)-1]) == 0 {
+          generateError("Curly Bracket mismatch.", list[0].Line, list[0].Col, "")
+        }
         i++
         if list[i].Token == tokens.LCURL {
           count--
@@ -88,11 +93,19 @@ func statements(ast *Tree, list []tokens.Token) {
 
       }
 
+    } else {
+     // nothing... error here? Nope..
     }
   }
   return
 }
 
+
+
+/*
+
+
+*/
 func statement(list []tokens.Token) (bool, *Tree) {
   if s,t := assignment(list); s {
     return true, t
@@ -106,6 +119,12 @@ func statement(list []tokens.Token) (bool, *Tree) {
   return false, nil
 }
 
+
+
+/*
+
+
+*/
 func class(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = CLASS
@@ -116,11 +135,22 @@ func class(list []tokens.Token) (bool, *Tree) {
   if list[1].Token != tokens.IDFR {
     generateError("Invalid Class Name", list[1].Line, list[1].Col, "")
   }
+  if list[2].Token != tokens.RCURL || list[len(list)-1].Token != tokens.LCURL {
+    generateError("Curly Bracket Mismatch", list[1].Line, list[1].Col, "")
+  }
+  //fmt.Println(list[2:len(list)])
 
   ast.value = list[1].Value
   return true, ast
 }
 
+
+
+
+/*
+
+
+*/
 func ifStatement(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = IFSTATEMENT
@@ -158,6 +188,14 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
   return true, ast
 }
 
+
+
+
+
+/*
+
+
+*/
 func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = ASSIGNMENT
@@ -177,6 +215,12 @@ func assignment(list []tokens.Token) (bool, *Tree) {
   addChildren2(ast, node(IDFR, list[0].Value), t)
   return true, ast
 }
+
+
+/*
+
+
+*/
 func booleanExpression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = BOOLEXPRESSION
@@ -201,6 +245,15 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
   }
   return true, ast
 }
+
+
+
+
+
+/*
+
+
+*/
 func expression(list []tokens.Token) (bool, *Tree) {
   var fn func(*Tree, []tokens.Token) *Tree
   ast := new(Tree)
@@ -257,6 +310,12 @@ func expression(list []tokens.Token) (bool, *Tree) {
   return false, nil
 }
 
+
+
+/*
+
+
+*/
 func factor(list []tokens.Token) (bool, *Tree) {
 
   if list[0].Token == tokens.IDFR {

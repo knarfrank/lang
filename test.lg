@@ -1,5 +1,4 @@
 class stoil {
-  func nuts : (a: Int, b: Int) -> (Int) {
-    return "3";
-  }
+
+
 }
