@@ -11,6 +11,7 @@ const (
   STATEMENT
   IFSTATEMENT
   CLASS
+  FUNCTION
   BOOLEXPRESSION
   ASSIGNMENT
   EXPRESSION
@@ -30,6 +31,7 @@ func getLabel(l int) string {
     case STATEMENT: return "STATEMENT"
     case IFSTATEMENT: return "IFSTATEMENT"
     case CLASS: return "CLASS"
+    case FUNCTION: return "FUNCTION"
     case BOOLEXPRESSION: return "BOOLEXPRESSION"
     case ASSIGNMENT: return "ASSIGNMENT"
     case EXPRESSION: return "EXPRESSION"
@@ -138,14 +140,91 @@ func class(list []tokens.Token) (bool, *Tree) {
   if list[2].Token != tokens.RCURL || list[len(list)-1].Token != tokens.LCURL {
     generateError("Curly Bracket Mismatch", list[1].Line, list[1].Col, "")
   }
-  //fmt.Println(list[2:len(list)])
+  if b, t := classBody(list[3:len(list)-1]); b {
+    addChild(ast, t)
+  } else {
+    return false, ast
+  }
 
   ast.value = list[1].Value
   return true, ast
 }
 
 
+func classBody(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = STATEMENTS
+  // If class is empty
+  if len(list) == 0 {
+    return true, ast
+  }
 
+  for i:=0; i< len(list); i++ {
+
+    if list[i].Token == tokens.SCOLN {
+      fmt.Println("stmt")
+
+    } else if list[i].Token == tokens.RCURL {
+
+      count := 1
+      for {
+        // If there is an open bracket but no code.
+        if len(list) == 0 {
+          break
+        }
+        i++
+        if list[i].Token == tokens.LCURL {
+          count--
+          if count == 0 {
+            if b, t := method(list[0:i+1]); b {
+              addChild(ast, t)
+            }
+
+
+
+            // Set list to the rest of the class body
+            list = list[i+1:len(list)]
+
+            i = 0
+          }
+        } else if list[i].Token == tokens.RCURL {
+          count++
+        }
+
+      }
+    } else {
+     // nothing... error here? Nope..
+    }
+  }
+
+  return true, ast
+}
+
+
+func method(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = FUNCTION
+  if list[0].Token != tokens.FUNC {
+    return false, ast
+  }
+  if list[1].Token != tokens.IDFR {
+    return false, ast
+  }
+  ast.value = list[1].Value
+
+  if list[2].Token != tokens.RPAREN {
+    return false, ast
+  }
+  i := 3
+  for {
+    if list[i].Token == tokens.LPAREN {
+      break
+    }
+    i++;
+  }
+
+  return true, ast
+}
 
 /*
 

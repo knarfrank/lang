@@ -1,4 +1,13 @@
 class stoil {
+  func nuts (a: Int, b: Int) -> (Int) {
 
+  }
 
+  func eat (a: Int, b: Int) -> (Int) {
+
+  }
+
+  func bee (a: Int, b: Int) -> (Int) {
+
+  }
 }
