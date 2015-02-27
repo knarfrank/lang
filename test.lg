@@ -1,5 +1,5 @@
 class stoil {
-  func nuts : (a: Int, b: Int) -> (Int, String) {
-    return 243, "NO";
+  func nuts : (a: Int, b: Int) -> (Int) {
+    return "3";
   }
 }

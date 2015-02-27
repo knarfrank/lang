@@ -195,7 +195,6 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
       for i:=1; i <= len(list); i++ {
         if s, _ := factor(list[0:i]); s {
           list = list[i:len(list)]
-          fmt.Println(list)
         }
       }
     }

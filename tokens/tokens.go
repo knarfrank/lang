@@ -66,6 +66,8 @@ const (
   COLN    // :
   COMMA   // ,
   SCOLN   // ;
+  DBLQ    // "
+  SNGQ    // '
 
   /*
       Keywords
@@ -103,6 +105,8 @@ func GetTokens() []Token {
                           Token{LET, "", "^(let)$", 0, 0},
                           Token{RPAREN, "", "^\\($", 0, 0},
                           Token{LPAREN, "", "^\\)$", 0, 0},
+                          Token{DBLQ, "", "^\\\"$", 0, 0},
+                          Token{SNGQ, "", "^\\'$", 0, 0},
                           Token{RCURL, "", "^\\{$", 0, 0},
                           Token{LCURL, "", "^\\}$", 0, 0},
                           Token{COLN, "", "^:$", 0, 0},
