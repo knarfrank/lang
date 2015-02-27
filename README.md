@@ -33,8 +33,8 @@ ifstatement =   "if" boolexp "{" statements "}"
                 { "else if" boolexp "{" statements "}" }
                 [("else" "{" statements "}")]
 
-(* func someFunction : (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; } *)
-function    =   "func" identifier ":"
+(* func someFunction (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; } *)
+function    =   "func" identifier
                 "(" {identifier ":" type [","]} ")" "->"
                 "(" {type [ "," ]} ")" "{" statements "}"
 
