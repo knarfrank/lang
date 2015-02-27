@@ -6,7 +6,9 @@ import (
 )
 
 
-
+/*
+  Function to parse a method.
+*/
 func method(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = FUNCTION
@@ -45,7 +47,7 @@ func method(list []tokens.Token) (bool, *Tree) {
   }
 
   // Check return type
-  if c, t := methodReturnType(list[i+3]); c {
+  if c, t := methodReturnType(list[i+4]); c {
     addChild(ast, t)
   } else {
     return false, ast
@@ -61,13 +63,20 @@ func method(list []tokens.Token) (bool, *Tree) {
   return true, ast
 }
 
+/*
+  Returns tree of return types of a method
+*/
 func methodReturnType(t tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = RETURNTYPE
+  ast.value = t.Value
+
   return true, ast
 }
 
-
+/*
+  Parses fuction parameters
+*/
 func methodParams(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = PARAMETERS
