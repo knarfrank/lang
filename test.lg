@@ -1,19 +1,9 @@
 class stoil {
   var hello : Integer;
-  
+
+
   func nuts (a: Int, b: Int) -> (Int) {
-    hello = 34;
-    be = 1;
+    a = 3;
   }
 
-  func eat (sf: Int, b: Int) -> (Int) {
-    be = 1;
-    be = 1;
-    be = 1;
-    be = 1;
-  }
-
-  func bee (a: Int, b: Int) -> (Int) {
-
-  }
 }

@@ -168,10 +168,12 @@ func classBody(list []tokens.Token) (bool, *Tree) {
   for i:=0; i< len(list); i++ {
 
     if list[i].Token == tokens.SCOLN {
-      fmt.Println("stmt")
-
+      if c,t := declaration(list[0:i]); c {
+        addChild(ast, t)
+      }
+      list = list[i+1:len(list)]
+      fmt.Println(list)
     } else if list[i].Token == tokens.RCURL {
-
       count := 1
       for {
         // If there is an open bracket but no code.
@@ -185,9 +187,6 @@ func classBody(list []tokens.Token) (bool, *Tree) {
             if b, t := method(list[0:i+1]); b {
               addChild(ast, t)
             }
-
-
-
             // Set list to the rest of the class body
             list = list[i+1:len(list)]
 
@@ -207,6 +206,22 @@ func classBody(list []tokens.Token) (bool, *Tree) {
 }
 
 
+
+func declaration(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = VAR
+  fmt.Println(list)
+  if list[0].Token != tokens.VAR {
+    generateError("Invalid Statement In Class", list[0].Line, list[0].Col, "")
+  }
+  if list[1].Token != tokens.IDFR || list[2].Token != tokens.COLN || list[3].Token != tokens.IDFR {
+    generateError("Invalid Function Parameter", list[0].Line, list[0].Col, "")
+  }
+  addChild(ast, node(IDFR, list[1].Value))
+  addChild(ast, node(IDFR, list[3].Value))
+  return true, ast
+
+}
 
 /*
 

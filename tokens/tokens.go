@@ -77,6 +77,7 @@ const (
   FUNC    // func
   LET    // let
   CLASS   // class
+  VAR     // var
 
 
 
@@ -103,6 +104,7 @@ func GetTokens() []Token {
                           Token{FUNC, "", "^(func)$", 0, 0},
                           Token{CLASS, "", "^(class)$", 0, 0},
                           Token{LET, "", "^(let)$", 0, 0},
+                          Token{VAR, "", "^(var)$", 0, 0},
                           Token{RPAREN, "", "^\\($", 0, 0},
                           Token{LPAREN, "", "^\\)$", 0, 0},
                           Token{DBLQ, "", "^\\\"$", 0, 0},
