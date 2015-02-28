@@ -172,7 +172,6 @@ func classBody(list []tokens.Token) (bool, *Tree) {
         addChild(ast, t)
       }
       list = list[i+1:len(list)]
-      fmt.Println(list)
     } else if list[i].Token == tokens.RCURL {
       count := 1
       for {
@@ -210,7 +209,6 @@ func classBody(list []tokens.Token) (bool, *Tree) {
 func declaration(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = VAR
-  fmt.Println(list)
   if list[0].Token != tokens.VAR {
     generateError("Invalid Statement In Class", list[0].Line, list[0].Col, "")
   }
