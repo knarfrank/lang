@@ -82,12 +82,14 @@ func methodParams(list []tokens.Token) (bool, *Tree) {
   ast.label = PARAMETERS
   i := 0
   for {
+    // If parameter is the last one
     if len(list) <= 3 {
       if c, t := methodParam(list[0: 3]); c {
         addChild(ast, t)
       }
       break
     }
+    // Each parameter is seperated by a comma
     if list[i].Token == tokens.COMMA {
       if c, t := methodParam(list[0: i]); c {
         addChild(ast, t)
@@ -104,11 +106,7 @@ func methodParams(list []tokens.Token) (bool, *Tree) {
 func methodParam(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = VAR
-  if list[0].Token != tokens.IDFR || list[1].Token != tokens.COLN {
-    generateError("Invalid Function Parameter", list[0].Line, list[0].Col, "")
-  }
-
-  if list[2].Token != tokens.IDFR {
+  if list[0].Token != tokens.IDFR || list[1].Token != tokens.COLN || list[2].Token != tokens.IDFR {
     generateError("Invalid Function Parameter", list[0].Line, list[0].Col, "")
   }
   addChild(ast, node(IDFR, list[0].Value))
