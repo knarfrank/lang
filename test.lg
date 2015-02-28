@@ -1,9 +1,11 @@
-class stoil {
+class frank {
   var hello : Integer;
+  var j : Integer;
 
 
   func nuts (a: Int, b: Int) -> (Int) {
     a = 3;
   }
+
 
 }

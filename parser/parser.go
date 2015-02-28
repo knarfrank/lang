@@ -167,11 +167,18 @@ func classBody(list []tokens.Token) (bool, *Tree) {
 
   for i:=0; i< len(list); i++ {
 
-    if list[i].Token == tokens.SCOLN {
-      if c,t := declaration(list[0:i]); c {
-        addChild(ast, t)
+    if list[0].Token == tokens.VAR {
+
+      for j:=1; j<len(list); j++ {
+        if list[j].Token == tokens.SCOLN {
+          if c,t := declaration(list[0:j]); c {
+            addChild(ast, t)
+            list = list[j+1:len(list)]
+            break
+          }
+        }
       }
-      list = list[i+1:len(list)]
+
     } else if list[i].Token == tokens.RCURL {
       count := 1
       for {
@@ -179,12 +186,15 @@ func classBody(list []tokens.Token) (bool, *Tree) {
         if len(list) == 0 {
           break
         }
+
         i++
         if list[i].Token == tokens.LCURL {
           count--
           if count == 0 {
             if b, t := method(list[0:i+1]); b {
               addChild(ast, t)
+              list = list[i+1:len(list)]
+              break
             }
             // Set list to the rest of the class body
             list = list[i+1:len(list)]
