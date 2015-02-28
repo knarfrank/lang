@@ -160,15 +160,21 @@ func class(list []tokens.Token) (bool, *Tree) {
 func classBody(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.label = STATEMENTS
+
+  methods := false
+
   // If class is empty
   if len(list) == 0 {
     return true, ast
   }
 
-  for i:=0; i< len(list); i++ {
-
+  for i:=0; i < len(list); i++ {
     if list[0].Token == tokens.VAR {
-
+      // Force methods to be under attribute declarations
+      if methods {
+        generateError("Class attributes should be above methods.", list[0].Line, list[0].Col, "")
+      }
+      // Loop till semicolon
       for j:=1; j<len(list); j++ {
         if list[j].Token == tokens.SCOLN {
           if c,t := declaration(list[0:j]); c {
@@ -192,14 +198,17 @@ func classBody(list []tokens.Token) (bool, *Tree) {
           count--
           if count == 0 {
             if b, t := method(list[0:i+1]); b {
+              methods = true;
               addChild(ast, t)
               list = list[i+1:len(list)]
+              fmt.Println(list)
+              i=0
               break
             }
             // Set list to the rest of the class body
             list = list[i+1:len(list)]
-
             i = 0
+
           }
         } else if list[i].Token == tokens.RCURL {
           count++
@@ -209,6 +218,7 @@ func classBody(list []tokens.Token) (bool, *Tree) {
     } else {
      // nothing... error here? Nope..
     }
+
   }
 
   return true, ast
