@@ -83,7 +83,9 @@ func methodParams(list []tokens.Token) (bool, *Tree) {
   i := 0
   for {
     if len(list) <= 3 {
-      fmt.Println(list[0: len(list)])
+      if c, t := methodParam(list[0: 3]); c {
+        addChild(ast, t)
+      }
       break
     }
     if list[i].Token == tokens.COMMA {

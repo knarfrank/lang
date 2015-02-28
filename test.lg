@@ -1,4 +1,6 @@
 class stoil {
+  var hello : Integer;
+  
   func nuts (a: Int, b: Int) -> (Int) {
     hello = 34;
     be = 1;
