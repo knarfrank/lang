@@ -1,12 +1,14 @@
 class frank {
-  var hello : Integer;
-
+  var hello : Integer = 6;
   var j : Integer;
+
 
   func nuts (a: Int, b: Int) -> (Int) {
     a = 3;
   }
-
+  func nuts (a: Int, b: Int, c : Int) -> (Int) {
+    for
+  }
 
 
 }

@@ -38,7 +38,7 @@ function    =   "func" identifier
                 "(" {identifier ":" type [","]} ")" "->"
                 "(" {type [ "," ]} ")" "{" statements "}"
 
-class       =   "class" identifier {" {declaration | function} "}"
+class       =   "class" identifier "{" {declaration} {function} "}"
 
 
 statements  =   statement ";" {statements}

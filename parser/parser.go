@@ -201,7 +201,6 @@ func classBody(list []tokens.Token) (bool, *Tree) {
               methods = true;
               addChild(ast, t)
               list = list[i+1:len(list)]
-              fmt.Println(list)
               i=0
               break
             }
