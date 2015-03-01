@@ -140,11 +140,13 @@ func returnStatement(list []tokens.Token) (bool, *Tree) {
   if list[0].Token != tokens.RETURN {
     return false, ast
   }
-  b, t := expression(list[1:len(list)])
-  if !b {
-    return false, ast
+  if len(list) > 1 {
+    if b, t := expression(list[1:len(list)]); !b {
+      return false, ast
+    } else {
+      addChild(ast, t)
+    }
   }
-  addChild(ast, t)
 
   return true, ast
 }
