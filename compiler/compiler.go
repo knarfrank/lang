@@ -4,10 +4,10 @@ import (
   "fmt"
   "lang/parser"
 )
-const {
+const (
   public = 1
   private = 2
-}
+)
 
 /*
   Stucture for a class
@@ -31,7 +31,7 @@ type Attribute struct {
 type Method struct {
   identifier string
   parameters []Parameter
-  returns []strings
+  returns []string
   // Will be default private
   visibilty int
 }
@@ -47,5 +47,5 @@ type Parameter struct {
 }
 
 func Compile(ast *parser.Tree) {
-
+fmt.Println("df")
 }
