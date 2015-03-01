@@ -12,6 +12,7 @@ const (
   IFSTATEMENT
   CLASS
   FUNCTION
+  RETURN
   PARAMETERS
   RETURNTYPE
   BOOLEXPRESSION
@@ -35,6 +36,7 @@ func getLabel(l int) string {
     case IFSTATEMENT: return "IFSTATEMENT"
     case CLASS: return "CLASS"
     case FUNCTION: return "FUNCTION"
+    case RETURN: return "RETURN"
     case PARAMETERS: return "PARAMETERS"
     case RETURNTYPE: return "RETURNTYPE"
     case BOOLEXPRESSION: return "BOOLEXPRESSION"
@@ -121,10 +123,30 @@ func statement(list []tokens.Token) (bool, *Tree) {
     return true, t
   } else if s,t := class(list); s {
     return true, t
+  } else if s,t := returnStatement(list); s {
+    return true, t
   } else {
     generateError("Invalid Statement", list[0].Line, list[0].Col, "")
   }
   return false, nil
+}
+
+
+
+func returnStatement(list []tokens.Token) (bool, *Tree) {
+  ast := new(Tree)
+  ast.label = RETURN
+
+  if list[0].Token != tokens.RETURN {
+    return false, ast
+  }
+  b, t := expression(list[1:len(list)])
+  if !b {
+    return false, ast
+  }
+  addChild(ast, t)
+
+  return true, ast
 }
 
 
