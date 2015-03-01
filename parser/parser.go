@@ -236,6 +236,14 @@ func declaration(list []tokens.Token) (bool, *Tree) {
   }
   addChild(ast, node(IDFR, list[1].Value))
   addChild(ast, node(IDFR, list[3].Value))
+  if len(list) > 4 {
+    if list[4].Token == tokens.ASMT {
+      _, t := expression(list[5:len(list)]);
+      addChild(ast, t)
+    }
+  }
+
+
   return true, ast
 
 }

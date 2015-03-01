@@ -1,6 +1,6 @@
 class frank {
-  var hello : Integer = 6;
-  var j : Integer;
+  var hello : Int = 6 * 3;
+  var j : Int = hello * 2;
 
 
   func nuts (a: Int, b: Int) -> (Int) {
