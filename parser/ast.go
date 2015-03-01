@@ -20,6 +20,21 @@ type Tree struct {
 }
 
 
+
+/*
+  Get child from array of children
+*/
+func getChild(t *Tree, i int) *Tree {
+  return t.children[i]
+}
+
+/*
+  Prints out information about a tree node
+*/
+func printTree(t *Tree) {
+  fmt.Println(getLabel(t.label) + " (" + t.value +")")
+}
+
 /*
   Function that displays a given tree
 */
@@ -30,7 +45,7 @@ func displayTree(t *Tree, i int) {
   }
 
   // Print label and value
-  fmt.Println(getLabel(t.label) + " (" + t.value +")")
+  printTree(t)
 
   // Recursivly call displayTree on children.
   if t.children != nil {

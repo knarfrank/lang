@@ -19,6 +19,7 @@ type Class struct {
   methods []Method
 
 }
+
 /*
   Stucture for an attribute within a class
 */
@@ -28,6 +29,7 @@ type Attribute struct {
   // Will be default private
   visibility int
 }
+
 type Method struct {
   identifier string
   parameters []Parameter
@@ -35,6 +37,7 @@ type Method struct {
   // Will be default private
   visibilty int
 }
+
 type Parameter struct {
   // The parameter identifier that will be used within the method
   identifier string
@@ -47,5 +50,5 @@ type Parameter struct {
 }
 
 func Compile(ast *parser.Tree) {
-fmt.Println("df")
+  fmt.Println(ast)
 }
