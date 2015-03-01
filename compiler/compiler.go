@@ -9,6 +9,11 @@ const (
   private = 2
 )
 
+
+type Program struct {
+  classes []Class
+}
+
 /*
   Stucture for a class
 */
@@ -38,6 +43,8 @@ type Method struct {
   visibilty int
 }
 
+
+
 type Parameter struct {
   // The parameter identifier that will be used within the method
   identifier string
@@ -49,15 +56,26 @@ type Parameter struct {
   defaultValue string
 }
 
+
+
 func Compile(ast *parser.Tree) {
+  program := new(Program)
   children := parser.GetChildren(ast)
 
   for _,stmt := range children {
     switch(stmt.Label) {
       case parser.CLASS:
-        fmt.Println("class")
+        program.classes = append(program.classes, class(stmt))
       default:
         fmt.Println("Nothing")
     }
   }
+}
+
+
+
+func class(ast *parser.Tree) Class {
+  class := new(Class)
+  //
+  return *class
 }
