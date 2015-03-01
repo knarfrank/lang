@@ -1,10 +1,11 @@
-class frank {
-  var hello : Int = 6 * 3;
-  var j : Int = hello * 2;
+class lang {
+  var a : Int = 100;
+  var b : Int;
 
 
-  func nuts (a: Int = 3453, b: Int = 6) -> (Int) {
-    a = 3;
+  func gnal (x: Int, y: Int = 6) -> (Int) {
+    a = x;
+    return y + x;
   }
 
 

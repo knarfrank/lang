@@ -1,6 +1,25 @@
 # lang (No real name yet...)
 A simple compiler written in go.
 
+# Example
+
+```lang
+
+
+class lang {
+  var a : Int = 100;
+  var b : Int;
+
+  func gnal (x: Int, y: Int = 6) -> (Int) {
+    a = x;
+    return y + x;
+  }
+
+}
+
+
+```
+
 
 # Language Definition
 
