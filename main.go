@@ -3,6 +3,7 @@ import (
   "fmt"
   "lang/lexer"
   "lang/parser"
+  "lang/compiler"
   "io/ioutil"
 )
 
@@ -22,8 +23,10 @@ func main() {
   fmt.Println("File Loaded. Compiling Code...")
   tokens := lexer.Lex(program)
   fmt.Println("Lexical Analysis Completed...")
-  parser.Parse(tokens)
+  tree := parser.Parse(tokens)
   fmt.Println("Parse Tree Generation Completed...")
+  compiler.Compile(tree)
+  fmt.Println("Compilation Complete")
 }
 
 

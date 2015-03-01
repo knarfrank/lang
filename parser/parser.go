@@ -54,11 +54,11 @@ func getLabel(l int) string {
 }
 
 
-func Parse(list []tokens.Token) bool {
+func Parse(list []tokens.Token) *Tree {
   ast := new(Tree)
   statements(ast, list)
   displayTree(ast, 0)
-  return true
+  return ast
 }
 
 
