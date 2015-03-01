@@ -78,7 +78,7 @@ const (
   LET    // let
   CLASS   // class
   VAR     // var
-
+  RETURN // return
 
 
 )
@@ -102,6 +102,7 @@ func GetTokens() []Token {
                           Token{IF, "", "^(if)$", 0, 0},
                           Token{ELSE, "", "^(else)$", 0, 0},
                           Token{FUNC, "", "^(func)$", 0, 0},
+                          Token{RETURN, "", "^(return)$", 0, 0},
                           Token{CLASS, "", "^(class)$", 0, 0},
                           Token{LET, "", "^(let)$", 0, 0},
                           Token{VAR, "", "^(var)$", 0, 0},
