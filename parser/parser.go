@@ -66,14 +66,14 @@ func Parse(list []tokens.Token) *Tree {
 
 
 func statements(ast *Tree, list []tokens.Token) {
-  ast.label = STATEMENTS
+  ast.Label = STATEMENTS
   if len(list) == 0 {
     return
   }
   for i:=0; i< len(list); i++ {
     if list[i].Token == tokens.SCOLN {
       t3 := new(Tree)
-      t3.label = STATEMENT
+      t3.Label = STATEMENT
       _, t0 := statement(list[0:i])
       addChild(ast, t0)
       statements(ast, list[i+1:len(list)])
@@ -91,7 +91,7 @@ func statements(ast *Tree, list []tokens.Token) {
           count--
           if count == 0 {
             t3 := new(Tree)
-            t3.label = STATEMENT
+            t3.Label = STATEMENT
             _, t0 := statement(list[0:i+1])
             addChild(ast, t0)
             statements(ast, list[i+1:len(list)])
@@ -135,7 +135,7 @@ func statement(list []tokens.Token) (bool, *Tree) {
 
 func returnStatement(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = RETURN
+  ast.Label = RETURN
 
   if list[0].Token != tokens.RETURN {
     return false, ast
@@ -159,7 +159,7 @@ func returnStatement(list []tokens.Token) (bool, *Tree) {
 */
 func class(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = CLASS
+  ast.Label = CLASS
   if list[0].Token != tokens.CLASS {
     return false, ast
   }
@@ -176,14 +176,14 @@ func class(list []tokens.Token) (bool, *Tree) {
     return false, ast
   }
 
-  ast.value = list[1].Value
+  ast.Value = list[1].Value
   return true, ast
 }
 
 
 func classBody(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = STATEMENTS
+  ast.Label = STATEMENTS
 
   methods := false
 
@@ -251,7 +251,7 @@ func classBody(list []tokens.Token) (bool, *Tree) {
 
 func declaration(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = VAR
+  ast.Label = VAR
   if list[0].Token != tokens.VAR {
     generateError("Invalid Statement In Class", list[0].Line, list[0].Col, "")
   }
@@ -278,7 +278,7 @@ func declaration(list []tokens.Token) (bool, *Tree) {
 */
 func ifStatement(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = IFSTATEMENT
+  ast.Label = IFSTATEMENT
 
   // If statement starts off with IF keyword
   if list[0].Token != tokens.IF {
@@ -323,7 +323,7 @@ func ifStatement(list []tokens.Token) (bool, *Tree) {
 */
 func assignment(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = ASSIGNMENT
+  ast.Label = ASSIGNMENT
   if len(list) < 3 {
     return false, ast
   }
@@ -348,7 +348,7 @@ func assignment(list []tokens.Token) (bool, *Tree) {
 */
 func booleanExpression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = BOOLEXPRESSION
+  ast.Label = BOOLEXPRESSION
   if list[0].Token == tokens.BOOL {
     addChildren1(ast, node(BOOL, list[0].Value))
     return true, ast

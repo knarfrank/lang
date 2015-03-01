@@ -10,7 +10,7 @@ import (
 */
 func method(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = FUNCTION
+  ast.Label = FUNCTION
   fmt.Println("")
   if list[0].Token != tokens.FUNC {
     return false, ast
@@ -18,7 +18,7 @@ func method(list []tokens.Token) (bool, *Tree) {
   if list[1].Token != tokens.IDFR {
     return false, ast
   }
-  ast.value = list[1].Value
+  ast.Value = list[1].Value
 
   if list[2].Token != tokens.RPAREN {
     return false, ast
@@ -69,8 +69,8 @@ func method(list []tokens.Token) (bool, *Tree) {
 */
 func methodReturnType(t tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = RETURNTYPE
-  ast.value = t.Value
+  ast.Label = RETURNTYPE
+  ast.Value = t.Value
   return true, ast
 }
 
@@ -79,7 +79,7 @@ func methodReturnType(t tokens.Token) (bool, *Tree) {
 */
 func methodParams(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = PARAMETERS
+  ast.Label = PARAMETERS
   i := 0
   for {
     // If parameter is the last one
@@ -106,7 +106,7 @@ func methodParams(list []tokens.Token) (bool, *Tree) {
 
 func methodParam(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
-  ast.label = VAR
+  ast.Label = VAR
   if list[0].Token != tokens.IDFR || list[1].Token != tokens.COLN || list[2].Token != tokens.IDFR {
     generateError("Invalid Function Parameter", list[0].Line, list[0].Col, "")
   }

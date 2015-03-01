@@ -10,9 +10,9 @@ import (
   Struct for abstract syntax tree
 */
 type Tree struct {
-  label int
-  value string
-  children []*Tree
+  Label int
+  Value string
+  Children []*Tree
   child0 *Tree
   child1 *Tree
   child2 *Tree
@@ -24,15 +24,18 @@ type Tree struct {
 /*
   Get child from array of children
 */
-func getChild(t *Tree, i int) *Tree {
-  return t.children[i]
+func GetChild(t *Tree, i int) *Tree {
+  return t.Children[i]
 }
 
+func GetChildren(t *Tree) []*Tree {
+  return t.Children
+}
 /*
   Prints out information about a tree node
 */
-func printTree(t *Tree) {
-  fmt.Println(getLabel(t.label) + " (" + t.value +")")
+func PrintTree(t *Tree) {
+  fmt.Println(getLabel(t.Label) + " (" + t.Value +")")
 }
 
 /*
@@ -45,13 +48,13 @@ func displayTree(t *Tree, i int) {
   }
 
   // Print label and value
-  printTree(t)
+  PrintTree(t)
 
   // Recursivly call displayTree on children.
-  if t.children != nil {
-    if len(t.children) != 0 {
-      for j:=0; j < len(t.children); j++ {
-        displayTree(t.children[j], i+1)
+  if t.Children != nil {
+    if len(t.Children) != 0 {
+      for j:=0; j < len(t.Children); j++ {
+        displayTree(t.Children[j], i+1)
       }
     }
   } else { // Should get rid of this after i get rid of crude way of doing children.
@@ -74,7 +77,7 @@ func displayTree(t *Tree, i int) {
   Adds a child tree to a given tree
 */
 func addChild(parent *Tree, child *Tree) {
-  parent.children = append(parent.children, child)
+  parent.Children = append(parent.Children, child)
 }
 
 /*
@@ -82,8 +85,8 @@ func addChild(parent *Tree, child *Tree) {
 */
 func node(label int, value string) *Tree {
   node := new(Tree)
-  node.label = label
-  node.value = value
+  node.Label = label
+  node.Value = value
   return node
 }
 

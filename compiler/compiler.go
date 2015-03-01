@@ -50,5 +50,14 @@ type Parameter struct {
 }
 
 func Compile(ast *parser.Tree) {
-  fmt.Println(ast)
+  children := parser.GetChildren(ast)
+
+  for _,stmt := range children {
+    switch(stmt.Label) {
+      case parser.CLASS:
+        fmt.Println("class")
+      default:
+        fmt.Println("Nothing")
+    }
+  }
 }

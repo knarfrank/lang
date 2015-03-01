@@ -15,7 +15,7 @@ import (
 func expression(list []tokens.Token) (bool, *Tree) {
   var fn func(*Tree, []tokens.Token) *Tree
   ast := new(Tree)
-  ast.label = EXPRESSION
+  ast.Label = EXPRESSION
   for i:=1; i <= len(list); i++ {
     // If the first characters are a factor
     if s, f := factor(list[0:i]); s {
@@ -29,10 +29,10 @@ func expression(list []tokens.Token) (bool, *Tree) {
         }
         if l[0].Token == tokens.ADD || l[0].Token == tokens.SUB || l[0].Token == tokens.MUL || l[0].Token == tokens.DIV {
           switch(list[0].Token) {
-            case tokens.ADD: tmp.label = ADD
-            case tokens.SUB: tmp.label = SUB
-            case tokens.MUL: tmp.label = MUL
-            case tokens.DIV: tmp.label = DIV
+            case tokens.ADD: tmp.Label = ADD
+            case tokens.SUB: tmp.Label = SUB
+            case tokens.MUL: tmp.Label = MUL
+            case tokens.DIV: tmp.Label = DIV
           }
           for j:=2; j <= len(l); j++ {
             if s,t := factor(l[1:j]); s {
@@ -78,13 +78,13 @@ func factor(list []tokens.Token) (bool, *Tree) {
 
   if list[0].Token == tokens.IDFR {
     ast := new(Tree)
-    ast.label = IDFR
-    ast.value = list[0].Value
+    ast.Label = IDFR
+    ast.Value = list[0].Value
     return true, ast
   } else if list[0].Token == tokens.INT {
     ast := new(Tree)
-    ast.label = INT
-    ast.value = list[0].Value
+    ast.Label = INT
+    ast.Value = list[0].Value
     return true, ast
   } else {
     if list[0].Token == tokens.RPAREN {
