@@ -15,8 +15,8 @@ type        =   "Int" | "Bool" | "Char" | "String"
 
 operator    =   "+" | "-" | "*" | "/"
 cmpop       =   "<" | ">" | "<=" | ">=" | "==" | "!="
-
 boolop      =   "&&" | "||"
+
 identifier  =   [uppercase | uppercase] {[uppercase | uppercase | digit]}
 integer     =   ["-"] digit {digit}
 
@@ -35,7 +35,7 @@ ifstatement =   "if" boolexp "{" statements "}"
 
 (* func someFunction (a: Int, b: Bool) -> (Bool) { a = 3; b = 4; return true; } *)
 function    =   "func" identifier
-                "(" {identifier ":" type [","]} ")" "->"
+                "(" {identifier ":" type ["=" integer] [","]} ")" "->"
                 "(" {type [ "," ]} ")" "{" statements "}"
 
 class       =   "class" identifier "{" {declaration} {function} "}"

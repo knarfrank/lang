@@ -3,11 +3,8 @@ class frank {
   var j : Int = hello * 2;
 
 
-  func nuts (a: Int, b: Int) -> (Int) {
+  func nuts (a: Int = 3453, b: Int = 6) -> (Int) {
     a = 3;
-  }
-  func nuts (a: Int, b: Int, c : Int) -> (Int) {
-    for
   }
 
 
