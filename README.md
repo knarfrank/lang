@@ -20,7 +20,7 @@ boolop      =   "&&" | "||"
 identifier  =   [uppercase | uppercase] {[uppercase | uppercase | digit]}
 integer     =   ["-"] digit {digit}
 
-declaration =   "var" identifier ":" type
+declaration =   "var" identifier ":" type ["=" expression]
 assignment  =   identifier equals expresison
 expression  =   factor {operator factor}
 factor      =   identifier | integer | "(" expression ")"
