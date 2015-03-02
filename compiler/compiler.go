@@ -34,6 +34,7 @@ type Attribute struct {
   attributeType string
   // Will be default private
   visibility int
+  memoryLocation int
 }
 
 type Method struct {
@@ -42,6 +43,7 @@ type Method struct {
   returns []string
   // Will be default private
   visibilty int
+  memoryLocation int
 }
 
 
@@ -87,7 +89,8 @@ func class(c *parser.Tree) Class {
       case parser.VAR:
         class.attributes = append(class.attributes, attribute(class, s))
       case parser.FUNCTION:
-        fmt.Println("method")
+        class.methods = append(class.methods, method(class, s))
+
     }
   }
   return *class
@@ -104,9 +107,35 @@ func checkAttributeExists(class *Class, id string) bool {
   return exists
 }
 
+func checkMethodExists(class *Class, id string) bool {
+  exists := false
+  for _, e := range class.methods {
+    if e.identifier == id {
+      exists = true
+      break
+    }
+  }
+  return exists
+}
+
+
+func method(class *Class, c *parser.Tree) Method {
+  method := new(Method)
+  method.identifier = c.Value
+  if !checkMethodExists(class, method.identifier) {
+    // Deal with params and return types here...
+  } else {
+    generateError("Method already exists", -1, -1, "")
+  }
+
+  return *method
+}
+
 func attribute(class *Class, c *parser.Tree) Attribute {
   attribute := new(Attribute)
   attribute.identifier = parser.GetChild(c, 0).Value
+
+  // Check if the atribute has already been declared.
   if !checkAttributeExists(class, attribute.identifier) {
     attribute.attributeType = parser.GetChild(c, 1).Value
 

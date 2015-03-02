@@ -1,7 +1,6 @@
 class lang {
   var a : Int;
   var b : Int;
-  var a : Int;
 
   func gnal (x: Int, y: Int = 6) -> (Int) {
     a = x;
