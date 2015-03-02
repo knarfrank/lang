@@ -3,6 +3,7 @@ package compiler
 import (
   "fmt"
   "lang/parser"
+  "strconv"
 )
 const (
   public = 1
@@ -74,8 +75,60 @@ func Compile(ast *parser.Tree) {
 
 
 
-func class(ast *parser.Tree) Class {
+
+
+func class(c *parser.Tree) Class {
   class := new(Class)
-  //
+  statements := parser.GetChildren(parser.GetChild(c, 0))
+
+  // Loop through each statement in a class (either a declaration or method)
+  for _, s := range statements {
+    switch(s.Label) {
+      case parser.VAR:
+        class.attributes = append(class.attributes, attribute(class, s))
+      case parser.FUNCTION:
+        fmt.Println("method")
+    }
+  }
   return *class
+}
+
+func checkAttributeExists(class *Class, id string) bool {
+  exists := false
+  for _, e := range class.attributes {
+    if e.identifier == id {
+      exists = true
+      break
+    }
+  }
+  return exists
+}
+
+func attribute(class *Class, c *parser.Tree) Attribute {
+  attribute := new(Attribute)
+  attribute.identifier = parser.GetChild(c, 0).Value
+  if !checkAttributeExists(class, attribute.identifier) {
+    attribute.attributeType = parser.GetChild(c, 1).Value
+
+    fmt.Println(attribute.identifier)
+    if len(parser.GetChildren(c)) > 2 {
+      if parser.GetChild(c, 2).Label == parser.EXPRESSION {
+        // do expression...
+      } else {
+        // do typing...
+        // do expression on 3?
+      }
+    }
+  } else {
+    generateError("Class attribute already declared", -1, -1, "")
+  }
+
+
+  return *attribute
+}
+
+
+func generateError(s string, lineNumber int, pos int, line string) {
+  fmt.Println(line)
+  panic("Lex Error: " + s + " On Line " + strconv.Itoa(lineNumber) + " column " + strconv.Itoa(pos))
 }

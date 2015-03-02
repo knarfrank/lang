@@ -13,7 +13,9 @@ import (
 
 
 func main() {
-  fmt.Println(len(os.Args), os.Args)
+  // Make parser not diaply the ast by default
+  displayAst := false
+
   // Read in file (should move to function...)
   dat, err := ioutil.ReadFile("test.lg")
   checkError(err)
@@ -22,7 +24,8 @@ func main() {
   tokens := lexer.Lex(program)
   fmt.Println("Lexical Analysis Completed...")
 
-  displayAst := false
+
+  // If command line option "-ast" is set
   for _, a := range os.Args {
     if a == "-ast" {
       displayAst = true
