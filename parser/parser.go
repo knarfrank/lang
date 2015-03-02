@@ -60,7 +60,7 @@ func Parse(list []tokens.Token, display bool) *Tree {
   ast := new(Tree)
   statements(ast, list)
   if display {
-    displayTree(ast, 0)
+    DisplayTree(ast, 0)
   }
 
   return ast

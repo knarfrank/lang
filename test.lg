@@ -2,21 +2,15 @@ class lang {
   var a : Int;
   var b : Int;
 
-  func gnal (x: Int, y: Int = 6) -> (Int) {
+  func gnal (x: Int, y: String) -> (Int) {
     a = x;
     return y + x;
   }
 
-
-}
-
-
-class boop {
-  var a : Int = 100;
-  var b : Int;
-
-
-  func gnal (x: Int, y: Int = 6) -> (Int) {
+  func gnal (x: Int, dfdsf: Int) -> (Int) {
+    a = x;
+    a = x;
+    a = x;
     a = x;
     return y + x;
   }

@@ -41,7 +41,7 @@ func PrintTree(t *Tree) {
 /*
   Function that displays a given tree
 */
-func displayTree(t *Tree, i int) {
+func DisplayTree(t *Tree, i int) {
   // Indent the line.
   for j:=0; j < i; j++ {
     fmt.Print("   ")
@@ -54,21 +54,21 @@ func displayTree(t *Tree, i int) {
   if t.Children != nil {
     if len(t.Children) != 0 {
       for j:=0; j < len(t.Children); j++ {
-        displayTree(t.Children[j], i+1)
+        DisplayTree(t.Children[j], i+1)
       }
     }
   } else { // Should get rid of this after i get rid of crude way of doing children.
     if t.child0 != nil {
-      displayTree(t.child0, i+1)
+      DisplayTree(t.child0, i+1)
     }
     if t.child1 != nil {
-      displayTree(t.child1, i+1)
+      DisplayTree(t.child1, i+1)
     }
     if t.child2 != nil {
-      displayTree(t.child2, i+1)
+      DisplayTree(t.child2, i+1)
     }
     if t.child3 != nil {
-      displayTree(t.child3, i+1)
+      DisplayTree(t.child3, i+1)
     }
   }
 }

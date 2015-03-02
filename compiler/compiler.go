@@ -107,28 +107,76 @@ func checkAttributeExists(class *Class, id string) bool {
   return exists
 }
 
-func checkMethodExists(class *Class, id string) bool {
+
+func paramCompare(p1 []Parameter, p2 []Parameter) bool {
+  if len(p1) != len(p2) {
+    return false
+  }
+  for i, e := range p1 {
+    /*
+    if e.identifier != p2[i].identifier {
+      return false
+    }*/
+    if e.paramType != p2[i].paramType {
+      return false
+    }
+  }
+  return true
+}
+
+func checkMethodExists(class *Class, id string, p []Parameter) bool {
   exists := false
   for _, e := range class.methods {
     if e.identifier == id {
-      exists = true
-      break
+      if paramCompare(e.parameters, p) {
+        exists = true
+        break
+      }
+
     }
   }
   return exists
 }
 
 
+
 func method(class *Class, c *parser.Tree) Method {
   method := new(Method)
+  parameters := parser.GetChildren(parser.GetChild(c, 0))
+  for _, p := range parameters {
+    method.parameters = append(method.parameters, methodParameter(p))
+  }
+  fmt.Println(method.parameters)
   method.identifier = c.Value
-  if !checkMethodExists(class, method.identifier) {
+  if !checkMethodExists(class, method.identifier, method.parameters) {
     // Deal with params and return types here...
+    fmt.Println("boom")
   } else {
     generateError("Method already exists", -1, -1, "")
   }
 
   return *method
+}
+
+func methodParameter(p *parser.Tree) Parameter {
+  parameter := new(Parameter)
+  parser.DisplayTree(p, 0)
+  parameter.identifier = parser.GetChild(p, 0).Value
+  if t := parser.GetChild(p, 1).Value; !checkType(t) {
+    generateError("Unknown type " + t, -1, -1, "")
+  }
+  parameter.paramType = parser.GetChild(p, 1).Value
+  if len(parser.GetChildren(p)) > 2 {
+    // Set default value...
+    parameter.optional = true
+    parameter.defaultValue = parser.GetChild(p, 2).Value
+  }
+  return *parameter
+}
+
+
+func checkType(t string) bool {
+  return true
 }
 
 func attribute(class *Class, c *parser.Tree) Attribute {
@@ -159,5 +207,5 @@ func attribute(class *Class, c *parser.Tree) Attribute {
 
 func generateError(s string, lineNumber int, pos int, line string) {
   fmt.Println(line)
-  panic("Lex Error: " + s + " On Line " + strconv.Itoa(lineNumber) + " column " + strconv.Itoa(pos))
+  panic("Compiler Error: " + s + " On Line " + strconv.Itoa(lineNumber) + " column " + strconv.Itoa(pos))
 }

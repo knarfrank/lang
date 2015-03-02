@@ -1,3 +1,4 @@
+
 package main
 import (
   "fmt"
@@ -15,6 +16,14 @@ import (
 func main() {
   // Make parser not diaply the ast by default
   displayAst := false
+
+
+  defer func() {
+    if r := recover(); r != nil {
+        fmt.Println("Compilation Failed.", r)
+    }
+  }()
+
 
   // Read in file (should move to function...)
   dat, err := ioutil.ReadFile("test.lg")
