@@ -15,10 +15,6 @@ type Tree struct {
   Line int
   Column int
   Children []*Tree
-  child0 *Tree
-  child1 *Tree
-  child2 *Tree
-  child3 *Tree
 }
 
 
@@ -53,24 +49,9 @@ func DisplayTree(t *Tree, i int) {
   PrintTree(t)
 
   // Recursivly call displayTree on children.
-  if t.Children != nil {
-    if len(t.Children) != 0 {
-      for j:=0; j < len(t.Children); j++ {
-        DisplayTree(t.Children[j], i+1)
-      }
-    }
-  } else { // Should get rid of this after i get rid of crude way of doing children.
-    if t.child0 != nil {
-      DisplayTree(t.child0, i+1)
-    }
-    if t.child1 != nil {
-      DisplayTree(t.child1, i+1)
-    }
-    if t.child2 != nil {
-      DisplayTree(t.child2, i+1)
-    }
-    if t.child3 != nil {
-      DisplayTree(t.child3, i+1)
+  if len(t.Children) != 0 {
+    for j:=0; j < len(t.Children); j++ {
+      DisplayTree(t.Children[j], i+1)
     }
   }
 }
@@ -91,20 +72,3 @@ func node(label int, value string) *Tree {
   node.Value = value
   return node
 }
-
-/*
-// Don't really need this funcitons. should delete them...
-func addChildren1(parent *Tree, c0 *Tree) {
-  parent.child0 = c0
-}
-
-func addChildren2(parent *Tree, c0 *Tree, c1 *Tree) {
-  parent.child0 = c0
-  parent.child1 = c1
-}
-
-func addChildren3(parent *Tree, c0 *Tree, c1 *Tree, c2 *Tree) {
-  parent.child0 = c0
-  parent.child1 = c1
-  parent.child2 = c2
-}*/
