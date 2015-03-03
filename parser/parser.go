@@ -340,7 +340,9 @@ func assignment(list []tokens.Token) (bool, *Tree) {
   if !b {
     return false, ast
   }
-  addChildren2(ast, node(IDFR, list[0].Value), t)
+
+  addChild(ast, node(IDFR, list[0].Value))
+  addChild(ast, t)
   return true, ast
 }
 
@@ -353,15 +355,15 @@ func booleanExpression(list []tokens.Token) (bool, *Tree) {
   ast := new(Tree)
   ast.Label = BOOLEXPRESSION
   if list[0].Token == tokens.BOOL {
-    addChildren1(ast, node(BOOL, list[0].Value))
+    addChild(ast, node(BOOL, list[0].Value))
     return true, ast
   } else {
     // If first character is equal to a unary operation such as negation
     if list[0].Token == tokens.LNOT {
       _, t := booleanExpression(list[1:len(list)])
       b := node(NOT, "")
-      addChildren1(b, t)
-      addChildren1(ast, b)
+      addChild(b, t)
+      addChild(ast, b)
       return true, ast
     } else {
       for i:=1; i <= len(list); i++ {

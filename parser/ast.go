@@ -12,6 +12,8 @@ import (
 type Tree struct {
   Label int
   Value string
+  Line int
+  Column int
   Children []*Tree
   child0 *Tree
   child1 *Tree
@@ -90,7 +92,7 @@ func node(label int, value string) *Tree {
   return node
 }
 
-
+/*
 // Don't really need this funcitons. should delete them...
 func addChildren1(parent *Tree, c0 *Tree) {
   parent.child0 = c0
@@ -105,4 +107,4 @@ func addChildren3(parent *Tree, c0 *Tree, c1 *Tree, c2 *Tree) {
   parent.child0 = c0
   parent.child1 = c1
   parent.child2 = c2
-}
+}*/

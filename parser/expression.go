@@ -38,9 +38,11 @@ func expression(list []tokens.Token) (bool, *Tree) {
             if s,t := factor(l[1:j]); s {
               l = l[j:len(l)]
               if len(l) == 0 {
-                addChildren2(tmp, f, t)
+                addChild(tmp, f)
+                addChild(tmp, t)
               } else {
-                addChildren2(tmp, f, fn(t, l))
+                addChild(tmp, f)
+                addChild(tmp, fn(t, l))
               }
               return tmp
             }
@@ -54,9 +56,9 @@ func expression(list []tokens.Token) (bool, *Tree) {
 
 
       if len(list) == 0 {
-        addChildren1(ast, f)
+        addChild(ast, f)
       } else {
-        addChildren1(ast, fn(f, list))
+        addChild(ast, fn(f, list))
       }
       return true, ast
     } else {
